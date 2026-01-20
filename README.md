@@ -299,8 +299,6 @@ event_system.load_custom_events("custom_events.json")
     "state_changes": {}
   }
 }
-```
-
 ---
 
 ## 🔧 工具脚本
@@ -324,16 +322,6 @@ python scripts/analyze_data.py --export
 ```
 
 ---
-
-## 📖 项目演示
-
-项目包含一个 PPT 风格的 HTML 演示文件，展示系统的主要功能：
-
-```bash
-# 在浏览器中打开
-open presentation.html  # macOS
-start presentation.html # Windows
-```
 
 ---
 
