@@ -1,0 +1,108 @@
+{
+  "events": [
+    {
+      "event_id": "custom_family_crisis",
+      "title": "家庭经济危机",
+      "description": "由于突发情况，家庭面临严重的经济困难，需要调整教育策略。",
+      "event_type": "family_event",
+      "trigger": "state_based",
+      "impact": {
+        "stress_change": 25.0,
+        "relationship_changes": {
+          "father_relationship": -5.0,
+          "mother_relationship": -3.0
+        },
+        "savings_change": -5000.0,
+        "description": "经济危机导致家庭压力增大，亲子关系受影响"
+      },
+      "probability": 0.1,
+      "conditions": {
+        "family_savings": {"max": 20000}
+      },
+      "chain_events": ["economic_recovery"]
+    },
+    {
+      "event_id": "custom_talent_discovery",
+      "title": "发现特殊才能",
+      "description": "孩子在某个领域表现出特殊才能，家长决定重点培养。",
+      "event_type": "random_event",
+      "trigger": "probability_based",
+      "impact": {
+        "knowledge_change": 10.0,
+        "stress_change": -5.0,
+        "relationship_changes": {
+          "father_relationship": 8.0,
+          "mother_relationship": 8.0
+        },
+        "description": "发现才能带来学习动力和家庭和谐"
+      },
+      "probability": 0.05,
+      "conditions": {
+        "child_age": {"min": 8, "max": 16}
+      }
+    },
+    {
+      "event_id": "custom_school_bullying",
+      "title": "校园霸凌事件",
+      "description": "孩子遭遇校园霸凌，需要家长和学校共同处理。",
+      "event_type": "random_event",
+      "trigger": "probability_based",
+      "impact": {
+        "stress_change": 30.0,
+        "relationship_changes": {
+          "father_relationship": 5.0,
+          "mother_relationship": 5.0
+        },
+        "health_change": -10.0,
+        "description": "霸凌事件造成严重心理创伤，但增进亲子关系"
+      },
+      "probability": 0.03,
+      "conditions": {
+        "child_age": {"min": 6, "max": 16}
+      },
+      "chain_events": ["bullying_resolution"]
+    }
+  ],
+  "chains": [
+    {
+      "chain_id": "economic_recovery",
+      "trigger_event": "custom_family_crisis",
+      "chain_events": [
+        {
+          "event_id": "economic_recovery",
+          "title": "经济恢复",
+          "description": "经过努力，家庭经济逐渐恢复正常。",
+          "delay_weeks": 12,
+          "probability": 0.7,
+          "impact": {
+            "stress_change": -15.0,
+            "relationship_changes": {
+              "father_relationship": 3.0,
+              "mother_relationship": 3.0
+            },
+            "savings_change": 3000.0,
+            "description": "经济恢复缓解家庭压力"
+          }
+        }
+      ]
+    },
+    {
+      "chain_id": "bullying_resolution",
+      "trigger_event": "custom_school_bullying",
+      "chain_events": [
+        {
+          "event_id": "bullying_resolution",
+          "title": "霸凌事件解决",
+          "description": "经过家长和学校的共同努力，霸凌事件得到妥善解决。",
+          "delay_weeks": 4,
+          "probability": 0.8,
+          "impact": {
+            "stress_change": -20.0,
+            "health_change": 8.0,
+            "description": "事件解决后心理创伤逐渐愈合"
+          }
+        }
+      ]
+    }
+  ]
+}

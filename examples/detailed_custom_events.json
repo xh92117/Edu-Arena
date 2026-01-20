@@ -1,0 +1,286 @@
+{
+  "events": [
+    {
+      "id": "event-001",
+      "name": "孩子生日",
+      "description": "本周是孩子的生日，全家人都很开心。",
+      "frequency": "yearly",
+      "month": 6,
+      "day": 15,
+      "impact": {
+        "child": {
+          "stress": -10,
+          "father_relationship": 5,
+          "mother_relationship": 5,
+          "grandfather_relationship": 3,
+          "grandmother_relationship": 3,
+          "physical_health": 2
+        },
+        "family": {
+          "family_savings": -200
+        }
+      },
+      "trigger_conditions": {
+        "child_age": {
+          "min": 0,
+          "max": 18
+        }
+      },
+      "tags": ["positive", "family", "celebration"]
+    },
+    {
+      "id": "event-002",
+      "name": "期末考试",
+      "description": "本周孩子将进行期末考试，全家人都很关注。",
+      "frequency": "semiannually",
+      "month": [1, 7],
+      "day": 10,
+      "impact": {
+        "child": {
+          "stress": 20,
+          "knowledge": 5
+        }
+      },
+      "trigger_conditions": {
+        "child_age": {
+          "min": 6,
+          "max": 18
+        }
+      },
+      "tags": ["negative", "school", "pressure"]
+    },
+    {
+      "id": "event-003",
+      "name": "家庭旅行",
+      "description": "全家人计划周末去旅行，放松心情。",
+      "frequency": "quarterly",
+      "month": [3, 6, 9, 12],
+      "day": 25,
+      "impact": {
+        "child": {
+          "stress": -15,
+          "father_relationship": 8,
+          "mother_relationship": 8,
+          "grandfather_relationship": 5,
+          "grandmother_relationship": 5,
+          "physical_health": 5
+        },
+        "family": {
+          "family_savings": -500
+        }
+      },
+      "trigger_conditions": {
+        "family_savings": {
+          "min": 5000
+        }
+      },
+      "tags": ["positive", "family", "relaxation"]
+    },
+    {
+      "id": "event-004",
+      "name": "父母工作忙碌",
+      "description": "父母最近工作非常忙碌，没有太多时间陪伴孩子。",
+      "frequency": "monthly",
+      "month": "all",
+      "day": 15,
+      "impact": {
+        "child": {
+          "stress": 10,
+          "father_relationship": -5,
+          "mother_relationship": -5
+        }
+      },
+      "tags": ["negative", "family", "busy"]
+    },
+    {
+      "id": "event-005",
+      "name": "孩子生病",
+      "description": "孩子生病了，需要在家休息几天。",
+      "frequency": "random",
+      "probability": 0.1,
+      "impact": {
+        "child": {
+          "stress": 15,
+          "physical_health": -20,
+          "knowledge": -3
+        },
+        "family": {
+          "family_savings": -100
+        }
+      },
+      "trigger_conditions": {
+        "child_age": {
+          "min": 0,
+          "max": 18
+        },
+        "child_physical_health": {
+          "max": 80
+        }
+      },
+      "tags": ["negative", "health", "sickness"]
+    },
+    {
+      "id": "event-006",
+      "name": "兴趣班报名",
+      "description": "学校开始报名各种兴趣班，家长需要决定是否给孩子报名。",
+      "frequency": "semiannually",
+      "month": [2, 8],
+      "day": 5,
+      "impact": {
+        "child": {
+          "stress": 10,
+          "knowledge": 8
+        },
+        "family": {
+          "family_savings": -300
+        }
+      },
+      "trigger_conditions": {
+        "child_age": {
+          "min": 3,
+          "max": 16
+        }
+      },
+      "tags": ["neutral", "education", "extracurricular"]
+    },
+    {
+      "id": "event-007",
+      "name": "长辈生病",
+      "description": "孩子的祖父母生病了，需要家人照顾。",
+      "frequency": "random",
+      "probability": 0.05,
+      "impact": {
+        "child": {
+          "stress": 12,
+          "grandfather_relationship": 5,
+          "grandmother_relationship": 5
+        },
+        "family": {
+          "family_savings": -300
+        }
+      },
+      "trigger_conditions": {
+        "child_age": {
+          "min": 0,
+          "max": 18
+        }
+      },
+      "tags": ["negative", "family", "health"]
+    },
+    {
+      "id": "event-008",
+      "name": "获得奖励",
+      "description": "孩子在学校获得了优秀学生奖励，全家人都很骄傲。",
+      "frequency": "random",
+      "probability": 0.15,
+      "impact": {
+        "child": {
+          "stress": -8,
+          "knowledge": 10,
+          "father_relationship": 8,
+          "mother_relationship": 8,
+          "grandfather_relationship": 5,
+          "grandmother_relationship": 5
+        }
+      },
+      "trigger_conditions": {
+        "child_age": {
+          "min": 6,
+          "max": 18
+        },
+        "child_knowledge": {
+          "min": 60
+        }
+      },
+      "tags": ["positive", "school", "achievement"]
+    },
+    {
+      "id": "event-009",
+      "name": "家庭聚餐",
+      "description": "周末全家人一起出去聚餐，增进感情。",
+      "frequency": "monthly",
+      "month": "all",
+      "day": 20,
+      "impact": {
+        "child": {
+          "stress": -5,
+          "father_relationship": 3,
+          "mother_relationship": 3,
+          "grandfather_relationship": 2,
+          "grandmother_relationship": 2
+        },
+        "family": {
+          "family_savings": -150
+        }
+      },
+      "tags": ["positive", "family", "social"]
+    },
+    {
+      "id": "event-010",
+      "name": "自然灾害",
+      "description": "当地发生了轻微的自然灾害，虽然没有造成太大损失，但给家人带来了一定的心理压力。",
+      "frequency": "random",
+      "probability": 0.03,
+      "impact": {
+        "child": {
+          "stress": 25,
+          "physical_health": -5
+        },
+        "family": {
+          "family_savings": -1000
+        }
+      },
+      "tags": ["negative", "external", "emergency"]
+    }
+  ],
+  "chains": [
+    {
+      "id": "chain-001",
+      "name": "考试周连锁反应",
+      "trigger_event": "event-002",
+      "followup_events": [
+        {
+          "id": "event-002-01",
+          "name": "考试复习",
+          "description": "孩子开始紧张地复习，准备期末考试。",
+          "delay_weeks": 1,
+          "impact": {
+            "child": {
+              "stress": 15,
+              "knowledge": 10
+            }
+          }
+        },
+        {
+          "id": "event-002-02",
+          "name": "考试结果",
+          "description": "期末考试结果出来了，孩子考得不错。",
+          "delay_weeks": 2,
+          "probability": 0.7,
+          "impact": {
+            "child": {
+              "stress": -10,
+              "knowledge": 5,
+              "father_relationship": 5,
+              "mother_relationship": 5
+            }
+          }
+        },
+        {
+          "id": "event-002-03",
+          "name": "考试结果不理想",
+          "description": "期末考试结果出来了，孩子考得不太理想。",
+          "delay_weeks": 2,
+          "probability": 0.3,
+          "impact": {
+            "child": {
+              "stress": 20,
+              "father_relationship": -5,
+              "mother_relationship": -5
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
