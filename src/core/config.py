@@ -13,7 +13,7 @@ class SimulationConfig(BaseSettings):
 
     # 环境设置
     num_environments: int = Field(default=7, ge=1, le=20, description="运行的环境数量")
-    simulation_speed: float = Field(default=1/24, gt=0, description="模拟速度 (1小时现实时间=多少周模拟时间)")
+    simulation_speed: float = Field(default=3600/35, gt=0, description="模拟速度 (1小时现实时间=多少周模拟时间)")
     log_dir: str = Field(default="logs", description="日志目录")
     log_file: str = Field(default="", description="日志文件名（留空则自动生成带时间戳的文件名）")
     log_max_size_mb: float = Field(default=100.0, ge=1.0, le=1000.0, description="日志文件最大大小（MB），超过此大小将轮转")
@@ -238,7 +238,8 @@ class SimulationConfig(BaseSettings):
 
     def get_simulation_speed_info(self) -> str:
         """获取模拟速度的描述信息"""
-        return f"1小时现实时间 = {self.simulation_speed * 24:.1f}周模拟时间 (每周 = {self.simulation_speed * 3600:.1f} 秒)"
+        # 特殊逻辑：显示现实5秒=模拟器一天
+        return f"现实5秒 = 模拟器1天 (1周模拟时间 = 35秒现实时间)"
 
     def get_model_config(self, model_name: str) -> Dict[str, str]:
         """

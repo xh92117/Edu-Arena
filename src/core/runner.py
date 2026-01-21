@@ -255,7 +255,8 @@ class SimulationRunner:
             actual_execution_time = time.time() - start_time
 
             # 计算需要睡眠的时间，确保每周模拟时间为指定小时数
-            required_sleep_time = (self.config.simulation_speed * 3600) - actual_execution_time
+            # 1周 = 7天，1天=5秒，所以1周=35秒
+            required_sleep_time = 35 - actual_execution_time
 
             if required_sleep_time > 0:
                 # 睡眠剩余时间，确保模拟速度符合要求
@@ -263,7 +264,7 @@ class SimulationRunner:
                 await asyncio.sleep(required_sleep_time)
             else:
                 # 如果执行时间超过了要求，不睡眠，直接继续下一周
-                required_time = self.config.simulation_speed * 3600
+                required_time = 35
                 print(f"本周模拟完成，实际执行时间: {actual_execution_time:.2f}秒，超过了要求的{required_time:.2f}秒")
 
 

@@ -78,18 +78,44 @@ class MockLLMClient(LLMClient):
 class OpenAILLMClient(LLMClient):
     """OpenAI兼容的LLM客户端"""
 
-    def __init__(self, config: SimulationConfig):
+    def __init__(self, config: SimulationConfig, model_config: Dict[str, str] = None):
         super().__init__(config)
+
+        # 获取API配置
+        api_key = None
+        base_url = None
+        model = None
+        timeout = config.llm_timeout
+
+        if model_config:
+            # 使用特定模型配置
+            api_key = model_config.get("api_key")
+            base_url = model_config.get("base_url")
+            model = model_config.get("model")
+        else:
+            # 使用通用配置（向后兼容）
+            api_key = config.llm_api_key
+            base_url = config.llm_base_url
+            model = config.llm_model
 
         try:
             from openai import AsyncOpenAI
+            logger.info(f"创建AsyncOpenAI客户端: api_key={api_key[:8]}... base_url={base_url} timeout={timeout}")
             self.client = AsyncOpenAI(
-                api_key=config.llm_api_key,
-                base_url=config.llm_base_url,
-                timeout=config.llm_timeout
+                api_key=api_key,
+                base_url=base_url,
+                timeout=timeout
             )
+            self.model = model
+            logger.info(f"成功创建AsyncOpenAI客户端，模型: {self.model}")
         except ImportError:
             raise ImportError("需要安装openai包: pip install openai")
+        except Exception as e:
+            logger.error(f"创建AsyncOpenAI客户端失败: {e}")
+            logger.error(f"详细错误信息: {type(e).__name__}: {e}")
+            import traceback
+            logger.error(f"错误堆栈: {traceback.format_exc()}")
+            raise
 
     @retry_async_decorator(**LLM_RETRY_CONFIG)
     async def chat_completion(self, messages: List[Dict[str, str]], **kwargs) -> Dict[str, Any]:
@@ -143,7 +169,7 @@ class OpenAILLMClient(LLMClient):
         try:
             response = await self.chat_completion(
                 messages=messages,
-                model=self.config.llm_model,
+                model=self.model,
                 temperature=0.0,
                 max_tokens=10
             )
@@ -362,20 +388,9 @@ class LLMClientFactory:
         异常:
             Exception: 创建失败时抛出异常
         """
-        base_url = model_config["base_url"]
-
-        # 为特定模型创建配置类
-        model_specific_config = SimulationConfig(
-            llm_api_key=model_config["api_key"],
-            llm_base_url=base_url,
-            llm_model=model_config["model"],
-            llm_timeout=config.llm_timeout,
-            llm_enable_emotion_analysis=config.llm_enable_emotion_analysis
-        )
-
         # 所有模型都使用OpenAI兼容客户端（通过相应服务商的兼容接口）
         logger.info(f"为{model_name}创建OpenAI兼容客户端")
-        return OpenAILLMClient(model_specific_config)
+        return OpenAILLMClient(config, model_config=model_config)
 
     @staticmethod
     def test_connection(config: SimulationConfig, model_name: str = None) -> bool:
